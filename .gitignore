@@ -1,0 +1,93 @@
+
+# ==========================================
+# Python
+# ==========================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Build / Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# ==========================================
+# Virtual environments
+# ==========================================
+
+.venv/
+venv/
+env/
+ENV/
+
+# ==========================================
+# Django
+# ==========================================
+
+# Local database
+db.sqlite3
+db.sqlite3-journal
+
+# Logs
+*.log
+
+# Uploaded files (user content)
+media/
+
+# Collected static files
+staticfiles/
+
+# Local settings
+local_settings.py
+
+# ==========================================
+# Environment variables / Secrets
+# ==========================================
+
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# PyCharm / JetBrains
+# ==========================================
+
+.idea/
+*.iml
+
+# ==========================================
+# VS Code
+# ==========================================
+
+.vscode/
+
+# ==========================================
+# Testing / Coverage
+# ==========================================
+
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# OS generated files
+# ==========================================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
