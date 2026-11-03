@@ -32,3 +32,118 @@ En ajoutant le statut "équipe" à l'utilisateur, il peut maintenant se connecte
 
 Pour désactiver le compte d'un utilisateur sans le supprimer, il suffit de décocher la case "Actif". 
 Cela permet de garder toutes les informations d'un compte et de pouvoir le réactiver au besoin sans avoir à le supprimer puis le recréer.
+
+## Exercices Shell
+
+1. Lister tous les objets de type Question : faites une boucle pour afficher les attributs de
+chaque question sur une ligne différente. Indice : remarquer que
+Question.objects.all() est un itérable sur lequel vous pouvez boucler avec une
+simple boucle for
+```python
+    questions = Question.objects.all()
+    
+    for q in questions:
+        print(q.question_text)
+        print(q.pub_date)
+   ```
+```python
+What's up?
+2026-11-02 13:55:05+00:00
+Quel est votre animal de compagnie préféré ?
+2026-09-10 07:21:17+00:00
+De quelle couleur est le cheval blanc d'Henri IV ?
+2025-05-16 09:23:55+00:00
+Comment est votre blanquette ?
+2026-10-17 20:11:32+00:00
+Combien de tiens valent un tu l'auras ?
+2026-01-19 04:48:21+00:00
+Que pensez-vous des panda roux ?
+2026-10-30 10:03:11+00:00 
+``` 
+2. Ajoutez un filtre sur la date de publication – portant par ex. sur un de ses composants4
+suivants : year, month, day – de vos questions et lister un sous-ensemble de vos
+questions suivant les dates que vous avez saisies à l'exercice précédent.
+
+On cherche par exmeple les questions publier avant 2026 sur le mois de mai
+```python
+questions = Question.objects.filter(pub_date__year__lt=2026, pub_date__month=5)
+for q in questions: 
+    print(q)
+```
+```python
+De quelle couleur est le cheval blanc d'Henri IV ?
+```
+3. Trouvez la deuxième question (pour laquelle l'attribut de clé primaire id = 2) de votre base
+de données, puis affichez les valeurs de tous ses attributs et tous les choix associés.
+```python
+q = Question.objects.get(pk=2)
+print(q.question_text)
+print(q.pub_date)
+print(q.choice_set.all())
+```
+```python
+Quel est votre animal de compagnie préféré ?
+2026-09-10 07:21:17+00:00
+<QuerySet [<Choice: Chien>, <Choice: Chat>, <Choice: Galinette cendrée>]>
+```
+4. Faites une boucle pour afficher les attributs de chaque question et leurs choix associés.
+```python
+questions = Question.objects.all()
+for q in questions:
+     print(q.question_text)
+     print(q.pub_date)
+     for c in q.choice_set.all():
+             print(c.choice_text)
+```
+```python
+What's up?
+2026-11-02 13:55:05+00:00
+Not much
+The sky
+Quel est votre animal de compagnie préféré ?
+2026-09-10 07:21:17+00:00
+Chien
+Chat
+Galinette cendrée
+De quelle couleur est le cheval blanc d'Henri IV ?
+2025-05-16 09:23:55+00:00
+Blanc
+Noir
+Je suis Daltonien
+Comment est votre blanquette ?
+2026-10-17 20:11:32+00:00
+Bonne
+Super bonne
+Super super bonne
+Combien de tiens valent un tu l'auras ?
+2026-01-19 04:48:21+00:00
+1
+2
+3
+Que pensez-vous des panda roux ?
+2026-10-30 10:03:11+00:00
+Ils sont mignons
+Ils sont adorables
+Ils sont mignons ET adorables
+```
+5. Affichez le nombre de choix enregistrés pour chaque question.
+```python
+questions = Question.objects.all()
+for q in questions:            
+     print(q.question_text)
+     print(q.choice_set.count())
+```
+```python
+What's up?
+2
+Quel est votre animal de compagnie préféré ?
+3
+De quelle couleur est le cheval blanc d'Henri IV ?
+3
+Comment est votre blanquette ?
+3
+Combien de tiens valent un tu l'auras ?
+3
+Que pensez-vous des panda roux ?
+3
+```
