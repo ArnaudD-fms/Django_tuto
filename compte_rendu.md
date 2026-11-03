@@ -18,3 +18,8 @@ Non, on peut uniquement voir toutes les données d'un modèle
 + Pouvez-vous chercher un contenu parmi tous les champs ?
 
 Non, il n'est pas non plus possible de trouver un contenu spécifique présent dans un champ
+
+### Quelles modifications apporter pour répondre positivement aux questions ci-dessus ?
+
+Avec l'ajout de ModelAdmin et des 4 options suivantes : **lisy_display**, **list_filter**, **ordering** et **search_fields**, il est maintenant
+possible de filtrer, trier et faire une recherche parmi tous les champs.
