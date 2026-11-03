@@ -23,3 +23,12 @@ Non, il n'est pas non plus possible de trouver un contenu spécifique présent d
 
 Avec l'ajout de ModelAdmin et des 4 options suivantes : **lisy_display**, **list_filter**, **ordering** et **search_fields**, il est maintenant
 possible de filtrer, trier et faire une recherche parmi tous les champs.
+
+## Création d'un nouvel utilisateur
+
+Si l'on créer un utilisateur sans lui octroyer de droits particuliers, il ne pourra pas se connecter à la page d'administration.
+
+En ajoutant le statut "équipe" à l'utilisateur, il peut maintenant se connecter à la page d'administration. (Cependant il ne peut toujours pas y effectuer d'action tant qu'on ne lui attribue pas spécifiquement des droits)
+
+Pour désactiver le compte d'un utilisateur sans le supprimer, il suffit de décocher la case "Actif". 
+Cela permet de garder toutes les informations d'un compte et de pouvoir le réactiver au besoin sans avoir à le supprimer puis le recréer.
