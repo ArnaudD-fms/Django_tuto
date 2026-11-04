@@ -26,6 +26,14 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
 
+class AllQuestionsView(generic.ListView):
+    template_name = "polls/all.html"
+
+    def get_queryset(self):
+        """Return all published questions."""
+        return Question.objects.all()
+
+
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
