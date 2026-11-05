@@ -1,0 +1,13 @@
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+    {% for choice_text, votes, percentage in frequencies %}
+        <li>
+            {{ choice_text }} :
+            {{ votes }} vote{{ votes|pluralize }}
+            ({{ percentage|floatformat:2 }} %)
+        </li>
+    {% empty %}
+        <li>Aucun choix disponible.</li>
+    {% endfor %}
+</ul>

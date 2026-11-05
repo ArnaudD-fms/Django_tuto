@@ -34,6 +34,16 @@ class AllQuestionsView(generic.ListView):
         return Question.objects.all()
 
 
+class FrequencyView(generic.DetailView):
+    model = Question
+    template_name = "polls/frequency.html"
+    context_object_name = "question"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["frequencies"] = self.object.get_choices()
+        return context
+
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
