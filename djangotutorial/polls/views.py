@@ -1,12 +1,14 @@
 from django.db.models import F, Sum, Max
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.db import transaction
 
 from .models import Choice, Question
 from .utils import minimax
+from .forms import QuestionForm, NB_MAX_CHOIX
 
 
 class IndexView(generic.ListView):
@@ -90,32 +92,40 @@ def statistics(request):
     })
 
 
-NB_MAX_CHOIX = 5
-
-
 def add(request):
+    form = QuestionForm()
+
     return render(request, 'polls/add.html', {
-        'liste_no_choix': range(NB_MAX_CHOIX)
+        'form': form
     })
 
 
 def confirm_add(request):
-    question_text = request.POST['question_text'].strip()
-    if question_text:
-        question = Question(question_text=question_text,
-                            pub_date=timezone.now())
-        question.save()
-        for no_choix in range(NB_MAX_CHOIX):
-            nom_champ = 'choix_{}'.format(no_choix)
-            choice_text = request.POST[nom_champ].strip()
-            if choice_text:
-                choice = Choice(question=question,
-                                choice_text=choice_text)
-                choice.save()
-            else:
-                break
+    if request.method != 'POST':
+        return redirect('polls:add')
+
+    form = QuestionForm(request.POST)
+
+    if form.is_valid():
+        with transaction.atomic():
+            question = Question.objects.create(
+                question_text=form.cleaned_data['question_text'],
+                pub_date=timezone.now()
+            )
+
+            for i in range(NB_MAX_CHOIX):
+                choice_text = form.cleaned_data[f'choix_{i}']
+
+                if choice_text:
+                    Choice.objects.create(
+                        question=question,
+                        choice_text=choice_text
+                    )
+                else:
+                    break
+
         return render(request, 'polls/confirm_add.html')
-    else:
-        return render(request, 'polls/add.html', {
-            'error_message': "You didn't enter a question text",
-        })
+
+    return render(request, 'polls/add.html', {
+        'form': form
+    })
