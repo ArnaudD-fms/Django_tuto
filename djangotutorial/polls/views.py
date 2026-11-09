@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 from .models import Choice, Question
 from .utils import minimax
@@ -87,3 +88,20 @@ def statistics(request):
          question_la_moins_populaire,
          'derniere_question': derniere_question,
     })
+
+
+def add(request):
+    return render(request, 'polls/add.html')
+
+
+def confirm_add(request):
+    question_text = request.POST['question_text'].strip()
+    if question_text:
+        question = Question(question_text=question_text,
+                            pub_date=timezone.now())
+        question.save()
+        return render(request, 'polls/confirm_add.html')
+    else:
+        return render(request, 'polls/add.html', {
+            'error_message': "You didn't enter a question text",
+        })
