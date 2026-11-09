@@ -90,8 +90,13 @@ def statistics(request):
     })
 
 
+NB_MAX_CHOIX = 5
+
+
 def add(request):
-    return render(request, 'polls/add.html')
+    return render(request, 'polls/add.html', {
+        'liste_no_choix': range(NB_MAX_CHOIX)
+    })
 
 
 def confirm_add(request):
@@ -100,6 +105,15 @@ def confirm_add(request):
         question = Question(question_text=question_text,
                             pub_date=timezone.now())
         question.save()
+        for no_choix in range(NB_MAX_CHOIX):
+            nom_champ = 'choix_{}'.format(no_choix)
+            choice_text = request.POST[nom_champ].strip()
+            if choice_text:
+                choice = Choice(question=question,
+                                choice_text=choice_text)
+                choice.save()
+            else:
+                break
         return render(request, 'polls/confirm_add.html')
     else:
         return render(request, 'polls/add.html', {
