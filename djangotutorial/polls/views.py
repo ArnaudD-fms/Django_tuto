@@ -124,7 +124,7 @@ def confirm_add(request):
                 else:
                     break
 
-        return render(request, 'polls/confirm_add.html')
+        return redirect("polls:index")
 
     return render(request, 'polls/add.html', {
         'form': form
