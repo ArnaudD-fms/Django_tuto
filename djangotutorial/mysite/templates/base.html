@@ -6,12 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Sondage{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'mysite/style.css' %}">
+    {% block css %}
+    {% endblock %}
 </head>
 <body>
 
     <header>
         {% block header %}
-            <img src="{% static 'mysite/images/header.jpg' %}" alt="Bandeau du site">
+            <img id="header-img" src="{% static 'mysite/images/header.jpg' %}" alt="Bandeau du site">
         {% endblock %}
     </header>
 

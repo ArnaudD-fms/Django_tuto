@@ -1,15 +1,32 @@
+{% extends "base.html" %}
+
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% block css %}
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% endblock %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }} ({{question.pub_date}})</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% block title %}
+    Liste des sondages
+{% endblock %}
 
-<a href="{% url 'polls:add' %}">Add a question</a>
+{% block main %}
+    <h1>Bienvenue sur la page des sondages</h1>
+    <p>Voici la liste des sondages disponibles.</p>
+
+    {% if latest_question_list %}
+        <ul>
+        {% for question in latest_question_list %}
+            <li>
+                <a href="{% url 'polls:detail' question.id %}">
+                    {{ question.question_text }} ({{ question.pub_date }})
+                </a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
+    <a href="{% url 'polls:add' %}">Add a question</a>
+{% endblock %}
