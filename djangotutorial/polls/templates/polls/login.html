@@ -1,0 +1,13 @@
+<h1>Connexion</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Se connecter</button>
+</form>
+
+<a href="{% url 'polls:index' %}">
+    Continuer en tant que visiteur
+</a>

@@ -93,6 +93,10 @@ def statistics(request):
 
 
 def add(request):
+
+    if not request.user.is_authenticated:
+        return redirect("polls:index")
+
     form = QuestionForm()
 
     return render(request, 'polls/add.html', {
@@ -101,6 +105,10 @@ def add(request):
 
 
 def confirm_add(request):
+
+    if not request.user.is_authenticated:
+        return redirect("polls:index")
+
     if request.method != 'POST':
         return redirect('polls:add')
 

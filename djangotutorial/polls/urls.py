@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -13,4 +14,19 @@ urlpatterns = [
     path('statistics/', views.statistics, name='statistics'),
     path('add/', views.add, name='add'),
     path('confirm_add/', views.confirm_add, name='confirm_add'),
+    path(
+        "connexion/",
+        auth_views.LoginView.as_view(
+            template_name="polls/login.html",
+            next_page="polls:index"
+        ),
+        name="login"
+    ),
+    path(
+        "deconnexion/",
+        auth_views.LogoutView.as_view(
+            next_page="polls:index"
+        ),
+        name="logout"
+    ),
 ]
